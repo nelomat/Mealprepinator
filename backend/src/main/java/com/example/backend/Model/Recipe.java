@@ -11,14 +11,17 @@ import java.util.List;
 @Setter
 @Entity
 public class Recipe {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String name;
 
+  private int servings;
+
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   @JoinColumn(name = "recipe_id")
-  private List<Ingredient> ingredients = new ArrayList<>();
+  private List<RecipeProduct> recipeProducts = new ArrayList<>();
 
 }

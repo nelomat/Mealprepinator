@@ -10,14 +10,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Ingredient {
+public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private String name;
-    private int quantity;
-    private String unit;
 
 }
