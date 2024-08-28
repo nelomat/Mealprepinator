@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
-  db:
-    image: postgres:15
+  postgres:
+    image: postgres:15.6-bullseye
     container_name: postgres
     environment:
       POSTGRES_USER: admin
@@ -12,6 +10,28 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  app:
+    build:
+      context: .  # Der Pfad zum Dockerfile für deine Anwendung
+      dockerfile: Dockerfile
+    container_name: app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mealprepinator
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   postgres_data:
