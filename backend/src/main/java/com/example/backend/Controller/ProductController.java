@@ -22,36 +22,52 @@ public class ProductController {
     this.productService = productService;
   }
 
-  // Create a new product
   @PostMapping
-  public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-    Product createdProduct = productService.createProduct(product);
-    return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+  public ResponseEntity<?> createProduct(@RequestBody Product product) {
+    try {
+      Product createdProduct = productService.createProduct(product);
+      return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+    } catch (Exception e) {
+      return new ResponseEntity<>("Error creating product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  // Get all products
   @GetMapping
-  public ResponseEntity<List<Product>> getAllProducts() {
-    List<Product> products = productService.getAllProducts();
-    return new ResponseEntity<>(products, HttpStatus.OK);
+  public ResponseEntity<?> getAllProducts() {
+    try {
+      List<Product> products = productService.getAllProducts();
+      if (products.isEmpty()) {
+        return new ResponseEntity<>("No products found.", HttpStatus.NOT_FOUND);
+      }
+      return new ResponseEntity<>(products, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>("Error fetching products: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  // Get a product by ID
   @GetMapping("/{id}")
-  public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-    Optional<Product> product = productService.getProductById(id);
-    return product.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-      .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+  public ResponseEntity<?> getProductById(@PathVariable Long id) {
+    try {
+      Optional<Product> product = productService.getProductById(id);
+      if (product.isPresent()) {
+        return new ResponseEntity<>(product.get(), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>("Product with ID " + id + " not found.", HttpStatus.NOT_FOUND);
+      }
+    } catch (Exception e) {
+      return new ResponseEntity<>("Error fetching product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  // Delete a product
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+  public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
     try {
       productService.deleteProduct(id);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      return new ResponseEntity<>("Product deleted successfully.", HttpStatus.NO_CONTENT);
     } catch (RuntimeException e) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>("Product with ID " + id + " not found.", HttpStatus.NOT_FOUND);
+    } catch (Exception e) {
+      return new ResponseEntity<>("Error deleting product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
