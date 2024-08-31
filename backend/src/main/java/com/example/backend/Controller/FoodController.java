@@ -10,36 +10,59 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/foods")
+@RequestMapping("/api/foods")
 public class FoodController {
 
   @Autowired
   private FoodService foodService;
 
   @GetMapping
-  public List<Food> getAllFoods() {
-    return foodService.getAllFoods();
+  public ResponseEntity<?> getAllFoods() {
+    try {
+      List<Food> foods = foodService.getAllFoods();
+      if (foods.isEmpty()) {
+        return new ResponseEntity<>("No foods found.", HttpStatus.NOT_FOUND);
+      }
+      return new ResponseEntity<>(foods, HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>("Error fetching foods: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Food> getFoodtById(@PathVariable Long id) {
-    return foodService.getFoodById(id)
-      .map(ResponseEntity::ok)
-      .orElse(ResponseEntity.notFound().build());
+  public ResponseEntity<Food> getFoodById(@PathVariable Long id) {
+    try {
+      return foodService.getFoodById(id)
+        .map(food -> new ResponseEntity<>(food, HttpStatus.OK))
+        .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+          .body(new Food()));
+    } catch (Exception e) {
+      System.err.println("Error fetching food: " + e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Food());
+    }
   }
 
+
   @PostMapping
-  public ResponseEntity<Food> createFood(@RequestBody Food food) {
-    Food savedFood = foodService.saveFood(food);
-    return new ResponseEntity<>(savedFood, HttpStatus.CREATED);
+  public ResponseEntity<?> createFood(@RequestBody Food food) {
+    try {
+      Food savedFood = foodService.saveFood(food);
+      return new ResponseEntity<>(savedFood, HttpStatus.CREATED);
+    } catch (Exception e) {
+      return new ResponseEntity<>("Error creating food: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteFood(@PathVariable Long id) {
-    if (foodService.deleteFoodById(id)) {
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    } else {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+  public ResponseEntity<?> deleteFood(@PathVariable Long id) {
+    try {
+      if (foodService.deleteFoodById(id)) {
+        return new ResponseEntity<>("Food deleted successfully.", HttpStatus.NO_CONTENT);
+      } else {
+        return new ResponseEntity<>("Food with ID " + id + " not found.", HttpStatus.NOT_FOUND);
+      }
+    } catch (Exception e) {
+      return new ResponseEntity<>("Error deleting food: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
