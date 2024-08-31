@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:15.6-bullseye
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: mealprepinator
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+
+  app:
+    build:
+      context: .  # Der Pfad zum Dockerfile für deine Anwendung
+      dockerfile: Dockerfile
+    container_name: app
+    environment:
+      POSTGRES_USER: admin
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/mealprepinator
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    depends_on:
+      - db
+    ports:
+      - "8085:8085"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
