@@ -13,8 +13,7 @@ import java.util.List;
 @RequestMapping("/api/recipes")
 public class RecipeController {
 
-  @Autowired
-  private RecipeService recipeService;
+  @Autowired private RecipeService recipeService;
 
   @GetMapping
   public ResponseEntity<?> getAllRecipes() {
@@ -25,16 +24,18 @@ public class RecipeController {
       }
       return new ResponseEntity<>(recipes, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<>("Error retrieving recipes: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(
+          "Error retrieving recipes: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<Recipe> getRecipeById(@PathVariable Long id) {
     try {
-      return recipeService.getRecipeById(id)
-        .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+      return recipeService
+          .getRecipeById(id)
+          .map(ResponseEntity::ok)
+          .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     } catch (Exception e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
@@ -43,10 +44,15 @@ public class RecipeController {
   @PostMapping
   public ResponseEntity<?> createRecipe(@RequestBody Recipe recipe) {
     try {
+      if (recipeService.checkIfRecipeAlreadyExists(recipe.getName(), recipe.getServings())) {
+        return new ResponseEntity<>(
+            "Recipe already exists with the same name and servings", HttpStatus.BAD_REQUEST);
+      }
       Recipe createdRecipe = recipeService.saveRecipe(recipe);
       return new ResponseEntity<>(createdRecipe, HttpStatus.CREATED);
     } catch (Exception e) {
-      return new ResponseEntity<>("Error creating recipe: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(
+          "Error creating recipe: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -59,7 +65,9 @@ public class RecipeController {
       recipeService.deleteRecipe(id);
       return new ResponseEntity<>("Recipe successfully deleted.", HttpStatus.NO_CONTENT);
     } catch (Exception e) {
-      return new ResponseEntity<>("Error deleting recipe with ID " + id + ": " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(
+          "Error deleting recipe with ID " + id + ": " + e.getMessage(),
+          HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

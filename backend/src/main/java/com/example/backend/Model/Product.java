@@ -17,15 +17,19 @@ public class Product {
 
   private String name;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "brand_id")
   private Brand brand;
 
   private int quantity;
-  @ManyToOne
+
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "unit_id")
   private Unit unit;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ProductFood> foods = new ArrayList<>();
+
+  public Product() {
+  }
 }

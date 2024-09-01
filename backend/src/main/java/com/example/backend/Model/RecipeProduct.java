@@ -1,7 +1,11 @@
 package com.example.backend.Model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "recipe_product")
 public class RecipeProduct {
@@ -18,9 +22,9 @@ public class RecipeProduct {
   @JoinColumn(name = "product_id")
   private Product product;
 
-  private int quantity;  // Menge des Produkts im Rezept
+  private int quantity; // Menge des Produkts im Rezept
 
   @ManyToOne
   @JoinColumn(name = "unit_id")
-  private Unit unit;  // Einheit des Produkts im Rezept
+  private Unit unit; // Einheit des Produkts im Rezept
 }

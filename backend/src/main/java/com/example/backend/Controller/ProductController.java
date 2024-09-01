@@ -1,7 +1,9 @@
 package com.example.backend.Controller;
 
 import com.example.backend.Model.Product;
+import com.example.backend.Service.BrandService;
 import com.example.backend.Service.ProductService;
+import com.example.backend.Service.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,21 +16,31 @@ import java.util.Optional;
 @RequestMapping("/api/products")
 public class ProductController {
 
-  @Autowired
-  private final ProductService productService;
+  @Autowired private final ProductService productService;
 
-  @Autowired
-  public ProductController(ProductService productService) {
+  @Autowired private final BrandService brandService;
+
+  @Autowired private final UnitService unitService;
+
+  public ProductController(
+      ProductService productService, BrandService brandService, UnitService unitService) {
     this.productService = productService;
+    this.brandService = brandService;
+    this.unitService = unitService;
   }
 
   @PostMapping
   public ResponseEntity<?> createProduct(@RequestBody Product product) {
     try {
-      Product createdProduct = productService.createProduct(product);
+      if (productService.checkIfProductAlreadyExists(product)) {
+        return new ResponseEntity<>(
+            "Product with the same name and brand already exists", HttpStatus.CONFLICT);
+      }
+      Product createdProduct = productService.saveProduct(product);
       return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     } catch (Exception e) {
-      return new ResponseEntity<>("Error creating product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(
+          "Error creating product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -41,7 +53,8 @@ public class ProductController {
       }
       return new ResponseEntity<>(products, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<>("Error fetching products: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(
+          "Error fetching products: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -55,7 +68,8 @@ public class ProductController {
         return new ResponseEntity<>("Product with ID " + id + " not found.", HttpStatus.NOT_FOUND);
       }
     } catch (Exception e) {
-      return new ResponseEntity<>("Error fetching product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(
+          "Error fetching product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -67,7 +81,8 @@ public class ProductController {
     } catch (RuntimeException e) {
       return new ResponseEntity<>("Product with ID " + id + " not found.", HttpStatus.NOT_FOUND);
     } catch (Exception e) {
-      return new ResponseEntity<>("Error deleting product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(
+          "Error deleting product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

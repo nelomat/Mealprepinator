@@ -11,8 +11,7 @@ import java.util.Optional;
 @Service
 public class FoodService {
 
-  @Autowired
-  private FoodRepository foodRepository;
+  @Autowired private FoodRepository foodRepository;
 
   public List<Food> getAllFoods() {
     return foodRepository.findAll();
@@ -34,5 +33,4 @@ public class FoodService {
       return false;
     }
   }
-
 }

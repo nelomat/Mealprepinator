@@ -13,8 +13,7 @@ import java.util.List;
 @RequestMapping("/api/foods")
 public class FoodController {
 
-  @Autowired
-  private FoodService foodService;
+  @Autowired private FoodService foodService;
 
   @GetMapping
   public ResponseEntity<?> getAllFoods() {
@@ -25,23 +24,23 @@ public class FoodController {
       }
       return new ResponseEntity<>(foods, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<>("Error fetching foods: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(
+          "Error fetching foods: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<Food> getFoodById(@PathVariable Long id) {
     try {
-      return foodService.getFoodById(id)
-        .map(food -> new ResponseEntity<>(food, HttpStatus.OK))
-        .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
-          .body(new Food()));
+      return foodService
+          .getFoodById(id)
+          .map(food -> new ResponseEntity<>(food, HttpStatus.OK))
+          .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Food()));
     } catch (Exception e) {
       System.err.println("Error fetching food: " + e.getMessage());
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Food());
     }
   }
-
 
   @PostMapping
   public ResponseEntity<?> createFood(@RequestBody Food food) {
@@ -49,7 +48,8 @@ public class FoodController {
       Food savedFood = foodService.saveFood(food);
       return new ResponseEntity<>(savedFood, HttpStatus.CREATED);
     } catch (Exception e) {
-      return new ResponseEntity<>("Error creating food: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(
+          "Error creating food: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -62,7 +62,8 @@ public class FoodController {
         return new ResponseEntity<>("Food with ID " + id + " not found.", HttpStatus.NOT_FOUND);
       }
     } catch (Exception e) {
-      return new ResponseEntity<>("Error deleting food: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(
+          "Error deleting food: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
