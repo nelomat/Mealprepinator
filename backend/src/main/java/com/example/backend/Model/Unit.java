@@ -17,4 +17,7 @@ public class Unit {
   private String name;
 
   private String abbreviation;
+
+  public Unit() {
+  }
 }
