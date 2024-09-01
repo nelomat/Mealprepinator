@@ -1,8 +1,9 @@
 package com.example.backend.Repository;
 
-import com.example.backend.Model.Food;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.example.backend.Model.Unit;
+
 @Repository
-public interface FoodRepository extends JpaRepository<Food, Long> {}
+public interface UnitRepository extends JpaRepository<Unit, Long> {}

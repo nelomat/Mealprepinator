@@ -17,12 +17,13 @@ public class Product {
 
   private String name;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "brand_id")
   private Brand brand;
 
   private int quantity;
-  @ManyToOne
+
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "unit_id")
   private Unit unit;
 

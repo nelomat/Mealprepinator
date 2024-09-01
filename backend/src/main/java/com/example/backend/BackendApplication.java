@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @SpringBootApplication
 @EntityScan(basePackages = {"com.example.backend.Model"})
 public class BackendApplication {
-	public static void main(String[] args) {
+  public static void main(String[] args) {
     SpringApplication.run(BackendApplication.class, args);
-	}
+  }
 }

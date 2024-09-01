@@ -21,7 +21,5 @@ public class Recipe {
   private int servings;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "recipe_id")
   private List<RecipeProduct> recipeProducts = new ArrayList<>();
-
 }
