@@ -1,0 +1,54 @@
+{
+  "name": "Frosty Flakes",
+  "brand": {
+    "name": "Ja!"
+  },
+  "quantity": 750,
+  "unit": {
+    "name": "Gramm",
+    "abbreviation": "g"
+  }
+}
+
+{
+  "name": "Bananen Milchshake",
+  "servings": 2,
+  "recipeProducts": [
+    {
+      "product": {
+        "id": 26
+      },
+      "quantity": 2,
+      "unit": {
+        "id": 3
+      }
+    },
+    {
+      "product": {
+        "id": 2
+      },
+      "quantity": 1,
+      "unit": {
+        "id": 2
+      }
+    }
+  ]
+}
+
+// with name -> problem no product id and no unit id in db mapped // 201 sucess but parsed json is sus
+{
+  "name": "Bananen Milkshake",
+  "servings": 2,
+  "recipeProducts": [
+    {
+      "productName": "Banane",
+      "quantity": 2,
+      "unitName": "Stück"
+    },
+    {
+      "productName": "Milk",
+      "quantity": 1,
+      "unitName": "Liter"
+    }
+  ]
+}

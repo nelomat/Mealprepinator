@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create Product</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+    <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-input type="text" required [(ngModel)]="newProduct.name" name="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Quantity</ion-label>
+      <ion-input type="number" required [(ngModel)]="newProduct.quantity" name="quantity"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Unit</ion-label>
+      <ion-input type="text" required [(ngModel)]="newProduct.unit" name="unit"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Brand</ion-label>
+      <ion-input type="text" required [(ngModel)]="newProduct.brand" name="brand"></ion-input>
+    </ion-item>
+    <ion-button expand="full" type="submit">Submit</ion-button>
+    <ion-text color="danger">
+      <p *ngIf="errorMessage">{{ errorMessage }}</p>
+    </ion-text>
+  </form>
+</ion-content>
