@@ -1,12 +1,4 @@
 <ion-content [fullscreen]="true">
-
-  <ion-buttons slot="end">
-    <ion-button (click)="openCreateProductModal()">
-      <ion-icon name="add"></ion-icon>
-      Add Product
-    </ion-button>
-  </ion-buttons>
-  
   <ion-refresher slot="fixed" (ionRefresh)="loadProducts($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> 
@@ -17,7 +9,10 @@
       {{ product.name }}
     </ion-item>
   </ion-list>
+  <ion-button (click)="goToProductCreate()">add product</ion-button>
 
+  
   <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
   <p *ngIf="errorMessage">{{ errorMessage }}</p> 
+
 </ion-content>

@@ -18,7 +18,7 @@ const routes: Routes = [
       },
     {
         path: 'product-tab',
-        loadChildren: () => import('./product-tab/product-tab.module').then( m => m.ProductTabPageModule)
+        loadChildren: () => import('../tabs/product-tab/product-tab.module').then( m => m.ProductTabPageModule)
       },
       {
         path: 'tab3',

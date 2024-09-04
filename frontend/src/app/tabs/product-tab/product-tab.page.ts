@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { Product } from '../../Models/product.model';
 import { ProductCreatePage } from './product-create/product-create.page';
 @Component({
@@ -15,7 +15,7 @@ export class ProductTabPage implements OnInit {
   noProductsMessage: string = 'No products available.';
 
   constructor(private productService: ProductService, 
-    private modalController: ModalController
+    private navController: NavController
   ) {}
 
   ngOnInit() {
@@ -41,10 +41,7 @@ export class ProductTabPage implements OnInit {
       },
     });
   }
-  async openCreateProductModal() {
-    const modal = await this.modalController.create({
-      component: ProductCreatePage,
-    });
-    await modal.present();
+  goToProductCreate() {
+    this.navController.navigateBack('/tabs/product-tab/product-create');
   }
 }  

@@ -1,18 +1,21 @@
 ion-content {
-    display: flex;
-    justify-content: center; /* Zentriert die Liste horizontal */
-    align-items: center;     /* Zentriert die Liste vertikal */
-    height: 100%;            /* Stellt sicher, dass der Inhalt die gesamte Höhe des Viewports einnimmt */
- background-color: aqua; 
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
 }
-  
-  ion-list {
-    background-color: green;
-    width: 100%;
-    max-width: 600px;        /* Optionale maximale Breite der Liste, damit sie nicht zu breit wird */
-  }
-  
-  ion-item {
-    text-align: center;      /* Zentriert den Text innerhalb jedes Listenelements */
-  }
-  
+
+ion-button {
+  margin: 16px;
+  background-color: green;
+}
+
+ion-list {
+  margin: 16px;
+}
+
+ion-spinner {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+}
