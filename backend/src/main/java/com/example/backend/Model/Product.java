@@ -1,11 +1,11 @@
 package com.example.backend.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -30,6 +30,5 @@ public class Product {
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<ProductFood> foods = new ArrayList<>();
 
-  public Product() {
-  }
+  public Product() {}
 }

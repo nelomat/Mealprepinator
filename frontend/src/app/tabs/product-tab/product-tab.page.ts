@@ -29,17 +29,25 @@ export class ProductTabPage implements OnInit {
         this.products = data;
         this.loading = false;
         if (event) {
-          event.target.complete(); // Vervollständigt den Pull-to-Refresh
+          event.target.complete(); 
         }
       },
       error: (error) => {
         this.errorMessage = 'Error loading products: ' + error.message;
         this.loading = false;
         if (event) {
-          event.target.complete(); // Vervollständigt den Pull-to-Refresh
+          event.target.complete(); 
         }
       },
     });
+  }
+
+  isOdd(product: Product): boolean {
+    return this.products.indexOf(product) % 2 !== 0;
+  }
+
+  goToProductDetails(id: number | undefined) {
+    this.navController.navigateForward(['/tabs/product-detail', id]);
   }
   goToProductCreate() {
     this.navController.navigateBack('/tabs/product-tab/product-create');

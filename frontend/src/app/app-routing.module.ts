@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs/tabs.page';
+import { ProductDetailPage } from './tabs/product-tab/product-detail/product-detail.page';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
         path: 'tab3',
         loadChildren: () => import('src/app/tab3/tab3.module').then(m => m.Tab3PageModule)
       },
+      { path: 'product-detail/:id', component: ProductDetailPage},
     ]
   },
 ];

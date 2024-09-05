@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Product Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/product-tab"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngIf="product">
+    <ion-card-header>
+      <ion-card-title>{{ product.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="info-container">
+        <div class="info-item">
+          <p class="info-value">{{ product.brand.name }}</p>
+          <p class="info-label">Brand</p>
+        </div>
+        <div class="info-item">
+          <p class="info-value">{{ product.quantity }}</p>
+          <p class="info-label">Quantity</p>
+        </div>
+        <div class="info-item">
+          <p class="info-value">{{ product.unit.name }}</p>
+          <p class="info-label">Unit</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

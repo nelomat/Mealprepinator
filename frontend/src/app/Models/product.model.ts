@@ -1,15 +1,19 @@
+import { Brand } from "./brand.model";
+import { Unit } from "./unit.model";
+
 export class Product {
   id?: number;
   name!: string;
+  brand!: Brand;
+  unit!: Unit;
   quantity!: number;
-  unit!: string;
-  brand!: string;
+  
 
-  constructor(id?: number, name?: string, quantity?: number, unit?: string, brand?: string) {
+  constructor(id?: number, name?: string, brand?: Brand, quantity?: number, unit?: Unit ) {
     this.id = id ?? 0; 
     this.name = name ?? ''; 
+    this.brand = brand ?? new Brand(); 
     this.quantity = quantity ?? 0;
-    this.unit = unit ?? ''; 
-    this.brand = brand ?? ''; 
+    this.unit = unit ?? new Unit(); 
   }
 }

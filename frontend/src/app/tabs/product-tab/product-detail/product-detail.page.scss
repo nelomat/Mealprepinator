@@ -1,0 +1,58 @@
+/* product.component.scss */
+ion-card {
+    --background: #f9f9f9; /* Heller Hintergrund für die Karte */
+    border-radius: 10px; /* Abgerundete Ecken */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatteneffekt */
+    padding: 15px; /* Innenabstand */
+    margin: 10px 0; /* Außenabstand */
+  
+    ion-card-header {
+      background-color: #00796b; /* Header-Hintergrundfarbe */
+      color: white; /* Textfarbe */
+      border-radius: 8px 8px 0 0; /* Abgerundete Ecken oben */
+      padding: 10px;
+    }
+  
+    ion-card-title {
+      font-size: 1.2rem; /* Titelgröße */
+      font-weight: bold; /* Fettdruck */
+      margin: 0; /* Entfernt Standardabstand */
+    }
+  
+    ion-card-content {
+      font-size: 1rem; /* Inhaltsschriftgröße */
+      color: #333; /* Schriftfarbe */
+      padding: 10px; /* Abstand zum Kartenrand */
+    }
+
+    .info-container {
+        display: flex;
+        justify-content: space-between; /* Verteilt die Items gleichmäßig */
+        gap: 10px; /* Abstand zwischen den Items */
+      }
+    
+      .info-item {
+        display: flex;
+        flex-direction: column; /* Ordnet die Werte und Beschriftungen übereinander an */
+        align-items: center; /* Zentriert die Items horizontal */
+      }
+    
+      .info-value {
+        font-size: 1.2rem; /* Größe des Wertes */
+        font-weight: bold; /* Fettgedruckt */
+        color: #333; /* Textfarbe */
+        margin-bottom: 5px; /* Abstand zur Beschriftung */
+      }
+    
+      .info-label {
+        font-size: 0.9rem; /* Größe der Beschriftung */
+        color: #666; /* Textfarbe */
+      }
+  
+    p {
+      margin: 5px 0; /* Abstand zwischen den Absätzen */
+      font-weight: 500; /* Mittlerer Fettdruck */
+      color: #666; /* Leicht gedämpfte Schriftfarbe */
+    }
+  }
+  

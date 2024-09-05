@@ -21,8 +21,7 @@ public class Unit {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NonNull
-  private String name;
+  @NonNull private String name;
 
   private String abbreviation;
 }

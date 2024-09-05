@@ -1,16 +1,15 @@
 package com.example.backend.Controller;
 
-import com.example.backend.Model.Product;
-import com.example.backend.Service.BrandService;
-import com.example.backend.Service.ProductService;
-import com.example.backend.Service.UnitService;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.backend.Model.Product;
+import com.example.backend.Service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
@@ -18,15 +17,8 @@ public class ProductController {
 
   @Autowired private final ProductService productService;
 
-  @Autowired private final BrandService brandService;
-
-  @Autowired private final UnitService unitService;
-
-  public ProductController(
-      ProductService productService, BrandService brandService, UnitService unitService) {
+  public ProductController(ProductService productService) {
     this.productService = productService;
-    this.brandService = brandService;
-    this.unitService = unitService;
   }
 
   @PostMapping
