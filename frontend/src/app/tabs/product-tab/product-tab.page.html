@@ -11,10 +11,17 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher> 
 
+  <ion-searchbar
+  [(ngModel)]="searchTerm"
+  (ionInput)="filterProducts($event)"
+  placeholder="Search products"
+></ion-searchbar>
+
   <ion-list>
-    <ion-item *ngFor="let product of products" (click)="goToProductDetails(product.id)" [ngClass]="{'odd-item': isOdd(product), 'even-item': !isOdd(product)}">
+    <ion-item *ngFor="let product of filteredProducts" (click)="goToProductDetails(product.id)" [ngClass]="{'odd-item': isOdd(product), 'even-item': !isOdd(product)}">
       <ion-label>
         <h2>{{ product.name }}</h2>
+        <ion-button (click)="deleteProduct(product.id)" color="danger">Delete</ion-button>
         <div class="product-info">
           <div class="info-item brand-item">
             <p class="info-value">{{ product.brand.name }}</p>

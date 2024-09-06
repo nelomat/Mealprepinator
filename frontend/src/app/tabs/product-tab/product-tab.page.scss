@@ -18,6 +18,14 @@ ion-toolbar {
   justify-content: space-between; 
 }
 
+ion-searchbar {
+  --background: #ffffff; /* Hintergrundfarbe der Suchleiste */
+  --placeholder-color: #757575; /* Farbe des Platzhalter-Textes */
+  --input-padding-start: 16px; /* Innenabstand des Suchfelds */
+  margin: 8px; /* Abstand zur umgebenden Elemente */
+  border-radius: 4px; /* Abgerundete Ecken der Suchleiste */
+}
+
 ion-title {
   font-size: 1.2rem; 
   font-weight: bold; 

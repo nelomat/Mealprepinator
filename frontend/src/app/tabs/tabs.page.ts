@@ -15,4 +15,8 @@ export class TabsPage {
   goToProductTab() {
     this.navController.navigateBack('/product-tab');
   }
+
+  goToRecipeTab() {
+    this.navController.navigateBack('/recipe-tab')
+  }
 }

@@ -2,7 +2,7 @@ import { Brand } from "./brand.model";
 import { Unit } from "./unit.model";
 
 export class Product {
-  id?: number;
+  id: number;
   name!: string;
   brand!: Brand;
   unit!: Unit;
